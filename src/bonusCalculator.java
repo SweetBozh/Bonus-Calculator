@@ -1,5 +1,12 @@
 import java.util.*;
 class Product{
+    private String nameProduct;
+    private double price;
+
+    Product(String n,double pr){
+        nameProduct = n;
+        price = pr;
+    }
     
 }
 public class bonusCalculator {
