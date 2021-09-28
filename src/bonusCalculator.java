@@ -19,6 +19,9 @@ class Employee {
     public ArrayList<Integer> getSale(){
         return sale;
     }
+    public void print(){
+        System.out.printf("%s, %2d, %2d, %2d, %2d, %2d", name, sale.get(0), sale.get(1), sale.get(2), sale.get(3), sale.get(4));
+    }
 }
 class Product implements Comparable<Product>{
     private String nameProduct;
@@ -75,10 +78,21 @@ public class bonusCalculator {
     private static Scanner scanFile;
     private static ArrayList<Employee> empArray  = new ArrayList<Employee>();
     private static Scanner input = new Scanner(System.in);
-
+    private static int invalid; //for checking invalid value
+    private static int unit; //for checking if unit is valid
+    private static String correct;
+    private static int printCorrect;
     public static void main(String[] args) throws Exception {
         openFile("Enter employee file: ");
+        System.out.println("---------------------------------------------------------------");
         readFileEmployee();
+
+        //Test Printing if Read file correctly? (Correct!)
+        for(int i=0; i<empArray.size(); i++){
+            empArray.get(i).print();
+            System.out.println();
+        }
+
         scanFile.close();
         input.close();
     }//end main
@@ -110,25 +124,45 @@ public class bonusCalculator {
             try{
                 String[] buf = line.split(",");
                 n = buf[0]; // Set to Object Variable
-                s.add(Integer.parseInt(buf[1].trim()));
-                s.add(Integer.parseInt(buf[2].trim()));
-                s.add(Integer.parseInt(buf[3].trim()));
-                s.add(Integer.parseInt(buf[4].trim()));
-                s.add(Integer.parseInt(buf[5].trim()));
+                s.add(checkInvalid(buf[1].trim(),line)); //checkInvalid check if buf[1] is Integer, if not -> convert to zero, return int value.
+                s.add(checkInvalid(buf[2].trim(),line));
+                s.add(checkInvalid(buf[3].trim(),line));
+                s.add(checkInvalid(buf[4].trim(),line));
+                s.add(checkInvalid(buf[5].trim(),line));
+                correct = n + ", " + s.get(0) + ", "+ s.get(1) +", "+  s.get(2)+ ", "+ s.get(3) + ", "+ s.get(4);
 
-                if(s.size() < 5) throw new ArithmeticException("Missing value : Skip");
-
-                for(int i=0; i<5; i++){
-                    if(s.get(i) < 0) throw new ArithmeticException("Unit less than zero");
+                if(printCorrect == 1){ 
+                    System.out.println("Input Error : " + line);
+                    System.out.println("Correction  : " + correct);
+                    System.out.println();
+                    printCorrect = 0;
                 }
                 Employee emp = new Employee(n,s);
                 empArray.add(emp);
+               
             }
-            catch(RuntimeException e){
-                System.out.println(e + "\n" + line + "\n");
+            catch(IndexOutOfBoundsException e){
+                System.out.println("Input error : "+ line);
+                System.out.println("Missing value, skip\n");
                 s.clear();
             }
         }//end while
     }//end ReadFile()
+
+        
+    public static int checkInvalid(String buf,String line){ //Get value from buf[1],buf[2],... Convert to zero if invalid. Then, return value.
+        try{
+            unit = Integer.parseInt(buf);
+            invalid = 0;
+            if(unit < 0) throw new ArithmeticException("Unit less than zero");
+            if(buf.isEmpty()) throw new IndexOutOfBoundsException("Missing Value");
+        }
+        catch(RuntimeException e){
+            invalid = 1; //Use in condition return below
+            printCorrect = 1; //Use for count if already print Correction
+        }
+        if(invalid == 0) return unit;
+        else return 0;
+    }
 
 }//end class BonusCalculator
