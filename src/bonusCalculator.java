@@ -6,12 +6,18 @@ class Employee {
     private ArrayList<Integer> sale = new ArrayList<Integer>();
     private int salesBonus, overtimeBonus, totalBonus;
 
-
     /* Constructor */
     Employee(String n, ArrayList<Integer> s) {
         super();
         name = n;
         sale = s;
+    }
+    /*Getter Method*/
+    public String getName(){
+        return name;
+    }
+    public ArrayList<Integer> getSale(){
+        return sale;
     }
 }
 class Product implements Comparable<Product>{
