@@ -1,5 +1,5 @@
 import java.util.*;
-class Product{
+class Product implements Comparable<Product>{
     private String nameProduct;
     private double price;
 
@@ -7,7 +7,13 @@ class Product{
         nameProduct = n;
         price = pr;
     }
-    
+
+    public int Comparable(Product other){
+        if(this.price > other.price )
+            return -1;
+        else if()
+    }
+
 }
 public class bonusCalculator {
     public static void main(String[] args) throws Exception {
