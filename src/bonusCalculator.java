@@ -14,6 +14,7 @@ class Product implements Comparable<Product>{
     Product(String n,int  pr){
         nameProduct = n;
         price = pr;
+        setBonus(pr);
     }
 
     public int compareTo(Product other){
@@ -23,6 +24,10 @@ class Product implements Comparable<Product>{
             return 0;
         else
             return 1;
+     }
+
+     public int getPrice(){
+         return price;
      }
 
      public void setBonus(double pr){
@@ -35,11 +40,21 @@ class Product implements Comparable<Product>{
         else 
             bonus = price * (25/1000);      
     }
-     
+    public int getBonus(){
+        return bonus;
+    }
+/*
+    public void SumSalesUnit(ArrayList <Product> p,ArrayList<Employee> em){
+        int temp;
+            for(int i=0;i<5;i++){
+             for(int j = 0 ;j<em.size();j++){
+                p.get(i).totalSalesUnit += em.get(j).getSales(i);
+        }
+    }
+*/
     public void printProduct(){
         System.out.printf("%s\t price = %,6d\t (bonus = %,5d)\ttotal sales = %,4d units\t%,7d\n",nameProduct,price,bonus,totalSalesUnit,totalSalesBaht);
     }   
-
 
 }
 
