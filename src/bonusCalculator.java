@@ -13,6 +13,7 @@ class Employee {
         name = n;
         sale = s;
     }
+}
 class Product implements Comparable<Product>{
     private String nameProduct;
     private int price;
