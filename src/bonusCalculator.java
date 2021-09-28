@@ -16,7 +16,7 @@ class Product implements Comparable<Product>{
         price = pr;
     }
 
-    public int Comparable(Product other){
+    public int compareTo(Product other){
         if(this.price > other.price )
             return -1;
         else if(this.price == other.price)
