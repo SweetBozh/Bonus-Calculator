@@ -19,6 +19,9 @@ class Employee {
     public ArrayList<Integer> getSale(){
         return sale;
     }
+    public void print(){
+        System.out.println(name + ": " + sale.get(0) + " " + sale.get(1) + " " + sale.get(2) + " " + sale.get(3) + " " + sale.get(4));
+    }
 }
 class Product implements Comparable<Product>{
     private String nameProduct;
@@ -79,6 +82,14 @@ public class bonusCalculator {
     public static void main(String[] args) throws Exception {
         openFile("Enter employee file: ");
         readFileEmployee();
+
+        //Test Printing if Read file correctly? (Correct!)
+        for(int i=0; i<empArray.size(); i++){
+            empArray.get(i).print();
+            System.out.println();
+        }
+
+
         scanFile.close();
         input.close();
     }//end main
