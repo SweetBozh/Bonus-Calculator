@@ -8,7 +8,6 @@ public class bonusCalculator {
         System.out.println(a);
         input.close();
         System.out.println("YOO");
-        //comment efokp
-        //เห็นเรามั้ย
+        
     }
 }
