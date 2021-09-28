@@ -7,6 +7,6 @@ public class bonusCalculator {
         System.out.println("Hello, World!");
         System.out.println(a);
         input.close();
-        //บรรทัดที่ 4 มีบัค
+        //บรรทัดที่ 4 ไม่มีบัค
     }
 }
