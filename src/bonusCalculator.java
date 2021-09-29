@@ -92,7 +92,6 @@ class Product implements Comparable<Product>{
      }
 
      public void setBonus(double pr){
-        //Narrow Casting
          if(pr>=0 && pr<10000)
              bonus = price * 0.01;
          else if(pr>=10000 && pr<30000)
@@ -112,7 +111,7 @@ class Product implements Comparable<Product>{
     }
 
     public void printProduct(){
-        System.out.printf("%-20s price = %.0,7f\t (bonus = %.0,5f)\ttotal sales = %,5d units\t%.0,10f baht\n",nameProduct,price,bonus,totalSalesUnit,totalSalesBaht);
+        System.out.printf("%-20s price = %,7.0f\t (bonus = %,5.0f)\ttotal sales = %,5.0f units\t%,10.0f baht\n",nameProduct,price,bonus,totalSalesUnit,totalSalesBaht);
     }   
 }//end class Product
 
@@ -154,7 +153,7 @@ public class bonusCalculator {
         System.out.println();
         openFile("Enter product file: ");
         readFileProduct();
-        sumSalesUnit();
+        //sumSalesUnit();
         System.out.println();
 
         openFile("Enter overtime file: ");
@@ -166,6 +165,7 @@ public class bonusCalculator {
         openFile("Enter employee file: ");
         System.out.println("---------------------------------------------------------------");
         readFileEmployee();
+        sumSalesUnit();
         System.out.println(" === Bonus Calculaing Result ===");
 
         //Calculate SalesBonus
