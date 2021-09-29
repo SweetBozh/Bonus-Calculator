@@ -92,7 +92,6 @@ public class bonusCalculator {
             empArray.get(i).print();
             System.out.println();
         }
-
         scanFile.close();
         input.close();
     }//end main
