@@ -46,7 +46,12 @@ class Product implements Comparable<Product>{
      public int getPrice(){
          return price;
      }
-     public void setBonus(double pr){
+
+     public int getBonus(){
+        return bonus;
+     }
+
+     public void setBonus(int pr){
         //Narrow Casting
          if(pr>=0 && pr<10000)
               bonus = (int)( (double)price * 0.01 );
@@ -56,15 +61,18 @@ class Product implements Comparable<Product>{
              bonus = (int)( (double)price * 0.02 );
          else 
              bonus = (int)( (double)price * 0.025 );
-     }
-    public int getBonus(){
-        return bonus;
     }
+
     public void SumSalesUnit(int sum){
         totalSalesUnit = sum;
      }
+     
+    public void setSalesBaht(){
+        totalSalesBaht = totalSalesUnit * price;
+    }
+
     public void printProduct(){
-        System.out.printf("%-20s price = %,7d\t (bonus = %,5d)\ttotal sales = %,5d units\t%,7d baht\n",nameProduct,price,bonus,totalSalesUnit,totalSalesBaht);
+        System.out.printf("%-20s price = %,7d\t (bonus = %,5d)\ttotal sales = %,5d units\t%,10d baht\n",nameProduct,price,bonus,totalSalesUnit,totalSalesBaht);
     }   
 }
 
@@ -196,6 +204,7 @@ public class bonusCalculator {
               sumUnit += tempSales.get(i);
           }
           proArray.get(i).SumSalesUnit(sumUnit);
+          proArray.get(i).setSalesBaht();
         }
         
         Collections.sort(proArray);
