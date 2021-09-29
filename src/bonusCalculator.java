@@ -1,10 +1,14 @@
+/*Members
+1. Warunyupa Lerdsaeng 6313180
+2. Naline Suesangiamsakul 6313216*/
 import java.util.*;
 import java.io.*;
 
 class Employee {
     private String name;
     private ArrayList<Integer> sale = new ArrayList<Integer>();
-    private int salesBonus, overtimeBonus, totalBonus;
+    private double salesBonus, overtimeBonus, totalBonus = 0;
+    private double totalSalesEmp, extraBonus;
 
     /* Constructor */
     Employee(String n, ArrayList<Integer> s) {
@@ -12,27 +16,59 @@ class Employee {
         name = n;
         sale = s;
     }
-    /*Getter Method*/
+    /*Getter & Setter Method*/
     public String getName(){
         return name;
     }
     public ArrayList<Integer> getSale(){
         return sale;
     }
-    public void set_overtimeBonus(int OTBonus){
+    public double getTotalSalesEmp(){
+        return totalSalesEmp;
+    }
+    public void set_overtimeBonus(double OTBonus){
         overtimeBonus = OTBonus;
+        totalBonus += overtimeBonus;
     }
+    public void set_salesBonus(int sb){
+        salesBonus = sb;
+        totalBonus += salesBonus;
+    }
+
+    /*Activity*/
+    public void calSalesBonus(ArrayList<Product> p){
+        double sb=0;
+        for(int i=0; i<5; i++){
+            sb += (p.get(i).getBonus() * sale.get(i));
+        }
+        salesBonus = sb;
+    }
+
+    public void calTotalSales(ArrayList<Product> p){
+        for(int i=0; i<5; i++){
+            totalSalesEmp += (p.get(i).getPrice() * sale.get(i));
+        }
+    }
+
+    public void calExtraBonus(){
+        extraBonus = totalSalesEmp * 0.005;
+    }
+
     public void print(){
-        //System.out.printf("%s, %2d, %2d, %2d, %2d, %2d", name, sale.get(0), sale.get(1), sale.get(2), sale.get(3), sale.get(4));
-        
+        System.out.printf("%-8s >> Air conditioners (%2d)  CCTV systems (%2d)  Dishwashers (%2d)  Microwave ovens (%2d)  Refridgerators (%2d)\n",name,sale.get(0),sale.get(1),sale.get(2),sale.get(3),sale.get(4));
+        System.out.println("            Total sales  : "+ totalSalesEmp);
+        System.out.println("            Total bonus  : "+ totalBonus);
+        System.out.println("            • sales bonus   : "+ salesBonus);
+        System.out.println("            • overtime bonus: "+ overtimeBonus);
+        System.out.println("            • extra bonus   : "+ extraBonus);
     }
-}
+}//end class Employee
 class Product implements Comparable<Product>{
     private String nameProduct;
-    private int price;
-    private int bonus, totalSalesUnit,totalSalesBaht;
+    private double price;
+    private double bonus, totalSalesUnit,totalSalesBaht;
     
-    Product(String n,int  pr){
+    Product(String n,double  pr){
         nameProduct = n;
         price = pr;
         setBonus(pr);
@@ -47,27 +83,27 @@ class Product implements Comparable<Product>{
             return 1;
      }
 
-     public int getPrice(){
+     public double getPrice(){
          return price;
      }
 
-     public int getBonus(){
+     public double getBonus(){
         return bonus;
      }
 
-     public void setBonus(int pr){
+     public void setBonus(double pr){
         //Narrow Casting
          if(pr>=0 && pr<10000)
-              bonus = (int)( (double)price * 0.01 );
+             bonus = price * 0.01;
          else if(pr>=10000 && pr<30000)
-             bonus = (int)( (double)price * 0.015 );
+             bonus = price * 0.015;
          else if(pr>=30000 && pr<50000)
-             bonus = (int)( (double)price * 0.02 );
+             bonus = price * 0.02;
          else 
-             bonus = (int)( (double)price * 0.025 );
+             bonus = price * 0.025;
     }
 
-    public void SumSalesUnit(int sum){
+    public void SumSalesUnit(double sum){
         totalSalesUnit = sum;
      }
      
@@ -76,61 +112,70 @@ class Product implements Comparable<Product>{
     }
 
     public void printProduct(){
-        System.out.printf("%-20s price = %,7d\t (bonus = %,5d)\ttotal sales = %,5d units\t%,10d baht\n",nameProduct,price,bonus,totalSalesUnit,totalSalesBaht);
+        System.out.printf("%-20s price = %.0,7f\t (bonus = %.0,5f)\ttotal sales = %,5d units\t%.0,10f baht\n",nameProduct,price,bonus,totalSalesUnit,totalSalesBaht);
     }   
-}
+}//end class Product
 
 class Overtime{
     private int month;
     private ArrayList<String> nameOTList= new ArrayList<String>();
-  
-    Overtime(int m,ArrayList<String> list){
+    /*Constructor*/
+    Overtime(int m,ArrayList<String> nList){
         month = m;
-        nameOTList = list;
+        nameOTList = nList;
+    }
+
+    /*Getter Method*/
+    public int getMonth(){
+        return month;
     }
     public ArrayList<String> getNameOT(){
       return nameOTList;
     }
+    /*Activity*/
     public void removeOT(int k){
       nameOTList.remove(k);
     }
-}
+}//end class Overtime
 
+//======================================= Main Class ================================================
 public class bonusCalculator {
     private static Scanner scanFile;
-    private static ArrayList<Employee> empArray  = new ArrayList<Employee>();
     private static Scanner input = new Scanner(System.in);
-    private static int invalid; //for checking invalid value
-    private static int unit; //for checking if unit is valid
-    private static String correct;
-    private static int printCorrect;
+    private static ArrayList<Employee> empArray  = new ArrayList<Employee>();
     private static ArrayList<Product> proArray = new ArrayList<Product>();
-    private static ArrayList<Overtime> OTArray = new ArrayList<Overtime>();    
+    private static ArrayList<Overtime> OTArray = new ArrayList<Overtime>();   
+    private static int invalid; //for checking invalid value
+    private static int unit; //for checking if unit of Product is valid
+    private static int printCorrect; //for printing Correction
     public static void main(String[] args) throws Exception {
-        openFile("Enter employee file: ");
         System.out.println("---------------------------------------------------------------");
-        readFileEmployee();
-
-        
+        System.out.println("          -=*=*== Welcome to Bonus Calculator ==*=*=-");
+        System.out.println();
         openFile("Enter product file: ");
-        System.out.println("---------------------------------------------------------------");
         readFileProduct();
         sumSalesUnit();
+        System.out.println();
 
-        openFile("Enter Overtime file: ");
-        System.out.println("---------------------------------------------------------------");
+        openFile("Enter overtime file: ");
         readFileOvertime();
         removeDuplicateOT();
         calOvertime();
+        System.out.println();
 
+        openFile("Enter employee file: ");
+        System.out.println("---------------------------------------------------------------");
+        readFileEmployee();
+        System.out.println(" === Bonus Calculaing Result ===");
 
-        //Test Printing if Read file correctly? (Correct!)
+        //Calculate SalesBonus
         for(int i=0; i<empArray.size(); i++){
-            empArray.get(i).print();
-            System.out.println();
+            empArray.get(i).calSalesBonus(proArray); //Set Employee's SalesBonus from price of Products
+            
+            empArray.get(i).getTotalSalesEmp();
+            empArray.get(i).calExtraBonus();
         }
-<<<<<<< HEAD
-=======
+
         //Print Product ArrayList
         System.out.printf("\n\n=== Product summary ===\n");
         for(int i=0;i<proArray.size();i++){
@@ -138,7 +183,6 @@ public class bonusCalculator {
         }
         System.out.println();
 
->>>>>>> 1bf524cb9a4bea5875c2293ba3285f3003fcf066
         scanFile.close();
         input.close();
     }//end main
@@ -160,7 +204,7 @@ public class bonusCalculator {
                 System.out.println(e + "\n");
             }
         }
-    }
+    }//end openFile
 
     public static void readFileEmployee() { //Method for Read & Create Employee obj.
         while (scanFile.hasNext()) {
@@ -175,11 +219,10 @@ public class bonusCalculator {
                 s.add(checkInvalid(buf[3].trim(),line));
                 s.add(checkInvalid(buf[4].trim(),line));
                 s.add(checkInvalid(buf[5].trim(),line));
-                correct = n + ", " + s.get(0) + ", "+ s.get(1) +", "+  s.get(2)+ ", "+ s.get(3) + ", "+ s.get(4);
 
                 if(printCorrect == 1){ 
                     System.out.println("Input Error : " + line);
-                    System.out.println("Correction  : " + correct);
+                    System.out.printf("Correction  : %s, %2d, %2d, %2d, %2d, %2d\n",n,s.get(0),s.get(1),s.get(2),s.get(3),s.get(4));
                     System.out.println();
                     printCorrect = 0;
                 }
@@ -193,7 +236,8 @@ public class bonusCalculator {
                 s.clear();
             }
         }//end while
-    }//end ReadFile()
+        System.out.println("---------------------------------------------------------------");
+    }//end readFileEmployee()
 
         
     public static int checkInvalid(String buf,String line){ //Get value from buf[1],buf[2],... Convert to zero if invalid. Then, return value.
@@ -209,7 +253,8 @@ public class bonusCalculator {
         }
         if(invalid == 0) return unit;
         else return 0;
-    }
+    }//end checkInvalid
+
     public static void readFileProduct(){
         String nameProduct;
         int price;
@@ -222,7 +267,7 @@ public class bonusCalculator {
             p  = new Product(nameProduct,price);
             proArray.add(p);
         }
-    }
+    }//end readFileProduct
 
     public static void sumSalesUnit(){
        /*calculate totalSalesUnit*/
@@ -238,7 +283,7 @@ public class bonusCalculator {
         }
         
         Collections.sort(proArray);
-    }
+    }//end sumSalesUnit
 
     public static void readFileOvertime(){
       /*Read file and add all Overtime Employee to OTArray*/
@@ -257,7 +302,7 @@ public class bonusCalculator {
         OT = new Overtime(month,nameList);
         OTArray.add(OT);
       }
-    }
+    }//ead readFileOvertime
 
     public static void removeDuplicateOT(){
       /*Remove Employee that already get OT this month in OTArray*/
@@ -273,24 +318,25 @@ public class bonusCalculator {
             }
         }
       }
-    }
+    }//end removeDuplicateOT
 
     public static void calOvertime(){
       /*Calculate and set overtimeBonus for 'an non-duplicate employee'*/
-      ArrayList<String> tempListOT = new ArrayList<String>(); //tempListOT keep Overtime Employees in a month
-      int checkOT,sumOT;
-      for(int i=0 ;i<empArray.size();i++){
+      ArrayList<String> tempListOT = new ArrayList<String>(); //keep Overtime Employees in a month temporarily
+      int checkOT;
+      double sumOT;
+      for(int i=0 ;i<empArray.size();i++){//each employee
         sumOT = 0;
-        for(int j=0;j<OTArray.size();j++){ //OTArray keep All Overtime Employees in a year
+        for(int j=0;j<OTArray.size();j++){ //each month
           tempListOT = OTArray.get(j).getNameOT();
-          for(int k=0;k<tempListOT.size();k++){
-            checkOT = empArray.get(i).getName().compareToIgnoreCase(tempListOT.get(k)); //Check each Employee with the name in Overtime.txt. If exists, get overtimeBonus 
-            if(checkOT==0){ 
-              sumOT+=2000;
+          for(int k=0;k<tempListOT.size();k++){ //compare an employee with each name in a month
+            checkOT = empArray.get(i).getName().compareToIgnoreCase(tempListOT.get(k));
+            if(checkOT==0){  //name exists, get overtimeBonus
+              sumOT+=2000.0;
             }
-          }
-        }
-       empArray.get(i).set_overtimeBonus(sumOT); //set 
-      }//loop-employee
-    }
+          }//end for
+        }//end for
+       empArray.get(i).set_overtimeBonus(sumOT);
+      }//end for
+    }//end calOvertime
 }//end class BonusCalculator
