@@ -46,17 +46,17 @@ class Product implements Comparable<Product>{
      public int getPrice(){
          return price;
      }
-
      public void setBonus(double pr){
-        if(pr>=0 && pr<10000)
-            bonus = price * (1/100);
-        else if(pr>=10000 && pr<30000)
-            bonus = price * (15/1000);
-        else if(pr>=30000 && pr<50000)
-            bonus = price * (2/100);
-        else 
-            bonus = price * (25/1000);      
-    }
+        //Narrow Casting
+         if(pr>=0 && pr<10000)
+              bonus = (int)( (double)price * 0.01 );
+         else if(pr>=10000 && pr<30000)
+             bonus = (int)( (double)price * 0.015 );
+         else if(pr>=30000 && pr<50000)
+             bonus = (int)( (double)price * 0.02 );
+         else 
+             bonus = (int)( (double)price * 0.025 );
+     }
     public int getBonus(){
         return bonus;
     }
@@ -99,7 +99,7 @@ public class bonusCalculator {
             proArray.get(i).printProduct();
             System.out.println();
         }
-        
+
         scanFile.close();
         input.close();
     }//end main
