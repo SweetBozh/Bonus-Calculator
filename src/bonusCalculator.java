@@ -105,8 +105,8 @@ public class bonusCalculator {
         System.out.printf("\n\n=== Product summary ===\n");
         for(int i=0;i<proArray.size();i++){
             proArray.get(i).printProduct();
-            System.out.println();
         }
+        System.out.println();
 
         scanFile.close();
         input.close();
