@@ -60,17 +60,11 @@ class Product implements Comparable<Product>{
     public int getBonus(){
         return bonus;
     }
-/*
-    public void SumSalesUnit(ArrayList <Product> p,ArrayList<Employee> em){
-        int temp;
-            for(int i=0;i<5;i++){
-             for(int j = 0 ;j<em.size();j++){
-                p.get(i).totalSalesUnit += em.get(j).getSales(i);
-        }
-    }
-*/
+    public void SumSalesUnit(int sum){
+        totalSalesUnit = sum;
+     }
     public void printProduct(){
-        System.out.printf("%s\t price = %,6d\t (bonus = %,5d)\ttotal sales = %,4d units\t%,7d\n",nameProduct,price,bonus,totalSalesUnit,totalSalesBaht);
+        System.out.printf("%-20s price = %,7d\t (bonus = %,5d)\ttotal sales = %,5d units\t%,7d baht\n",nameProduct,price,bonus,totalSalesUnit,totalSalesBaht);
     }   
 }
 
@@ -82,17 +76,30 @@ public class bonusCalculator {
     private static int unit; //for checking if unit is valid
     private static String correct;
     private static int printCorrect;
+    private static ArrayList<Product> proArray = new ArrayList<Product>();
     public static void main(String[] args) throws Exception {
         openFile("Enter employee file: ");
         System.out.println("---------------------------------------------------------------");
         readFileEmployee();
+
+        
+        openFile("Enter product file: ");
+        System.out.println("---------------------------------------------------------------");
+        readFileProduct();
+        sumSalesUnit();
 
         //Test Printing if Read file correctly? (Correct!)
         for(int i=0; i<empArray.size(); i++){
             empArray.get(i).print();
             System.out.println();
         }
-
+        //Print Product ArrayList
+        System.out.printf("\n\n=== Product summary ===\n");
+        for(int i=0;i<proArray.size();i++){
+            proArray.get(i).printProduct();
+            System.out.println();
+        }
+        
         scanFile.close();
         input.close();
     }//end main
@@ -164,5 +171,33 @@ public class bonusCalculator {
         if(invalid == 0) return unit;
         else return 0;
     }
+    public static void readFileProduct(){
+        String nameProduct;
+        int price;
+        Product p;
+    
+        while (scanFile.hasNext()) {
+            String line = scanFile.nextLine();
+            String []buf = line.split(",");
+            nameProduct = buf[0].trim();
+            price = Integer.parseInt(buf[1].trim()); 
+            p  = new Product(nameProduct,price);
+            proArray.add(p);
+        }
+    }
 
+    public static void sumSalesUnit(){
+       //calculate totalSalesUnit
+        ArrayList<Integer> tempSales = new ArrayList<Integer>();
+        for(int i=0; i<proArray.size(); i++){
+          int sumUnit = 0;
+          for(int j=0; j<empArray.size(); j++){
+              tempSales = empArray.get(j).getSale();
+              sumUnit += tempSales.get(i);
+          }
+          proArray.get(i).SumSalesUnit(sumUnit);
+        }
+        
+        Collections.sort(proArray);
+    }
 }//end class BonusCalculator
