@@ -55,7 +55,7 @@ class Employee {
     }
 
     public void print(){
-        System.out.printf("%-8s >> Air conditioners (%2d)  CCTV systems (%2d)  Dishwashers (%2d)  Microwave ovens (%2d)  Refridgerators (%2d)\n",name,sale.get(0),sale.get(1),sale.get(2),sale.get(3),sale.get(4));
+        System.out.printf("%-8s >> Air conditioners (%2.0f)  CCTV systems (%2.0f)  Dishwashers (%2.0f)  Microwave ovens (%2.0f)  Refridgerators (%2)\n",name,sale.get(0),sale.get(1),sale.get(2),sale.get(3),sale.get(4));
         System.out.println("            Total sales  : "+ totalSalesEmp);
         System.out.println("            Total bonus  : "+ totalBonus);
         System.out.println("            • sales bonus   : "+ salesBonus);
@@ -157,16 +157,17 @@ public class bonusCalculator {
 
         openFile("Enter overtime file: ");
         readFileOvertime();
-        removeDuplicateOT();
-        calOvertime();
+
         System.out.println();
 
         openFile("Enter employee file: ");
         System.out.println("---------------------------------------------------------------");
         readFileEmployee();
         sumSalesUnit();
+        removeDuplicateOT();
+        calOvertime();
         System.out.println(" === Bonus Calculaing Result ===");
-
+        
         //Calculate SalesBonus
         for(int i=0; i<empArray.size(); i++){
             empArray.get(i).calSalesBonus(proArray); //Set Employee's SalesBonus from price of Products
