@@ -153,7 +153,6 @@ public class bonusCalculator {
         System.out.println();
         openFile("Enter product file: ");
         readFileProduct();
-        //sumSalesUnit();
         System.out.println();
 
         openFile("Enter overtime file: ");
