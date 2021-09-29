@@ -8,7 +8,7 @@ class Employee implements Comparable<Employee>{
     private String name;
     private ArrayList<Integer> sale = new ArrayList<Integer>();
     private double salesBonus, overtimeBonus, totalBonus = 0;
-    private double totalSalesEmp, extraBonus;
+    private double totalSalesEmp=0, extraBonus;
     private boolean winner = false;
 
     /* Constructor */
@@ -40,9 +40,13 @@ class Employee implements Comparable<Employee>{
         overtimeBonus = OTBonus;
         totalBonus += overtimeBonus;
     }
-    public void set_salesBonus(int sb){
+    public void set_salesBonus(double sb){
         salesBonus = sb;
         totalBonus += salesBonus;
+    }
+    public void set_extraBonus(double eb){
+        extraBonus = eb;
+        totalBonus += extraBonus;
     }
     public void setWinner(boolean a){
         winner = a;
@@ -54,7 +58,7 @@ class Employee implements Comparable<Employee>{
         for(int i=0; i<5; i++){
             sb += (p.get(i).getBonus() * sale.get(i));
         }
-        salesBonus = sb;
+        this.set_salesBonus(sb);
     }
 
     public void calTotalSales(ArrayList<Product> p){
@@ -64,7 +68,8 @@ class Employee implements Comparable<Employee>{
     }
 
     public void calExtraBonus(int amountWinner){
-        extraBonus = (totalSalesEmp * 0.005)/amountWinner;
+        double extraBonus = (totalSalesEmp * 0.005)/amountWinner;
+        this.set_extraBonus(extraBonus);
     }
 
     public void print(){
@@ -200,7 +205,7 @@ public class bonusCalculator {
             System.out.println();
         }
         /*Print Product ArrayList*/
-        System.out.printf("\n\n=== Product summary ===\n");
+        System.out.printf("\n=== Product summary ===\n");
         for(int i=0;i<proArray.size();i++){
             proArray.get(i).printProduct();
         }
@@ -370,6 +375,7 @@ public class bonusCalculator {
 
         for(int i=0; i<empArray.size(); i++){
             empArray.get(i).calTotalSales(proArray);
+            System.out.println("Total Sale of "+ empArray.get(i).getName() + "= " +empArray.get(i).getTotalSalesEmp());
             empArray.get(i).calSalesBonus(proArray); //Set Employee's SalesBonus from price of Products
             tsaleEmpList.add(empArray.get(i).getTotalSalesEmp());
         }
@@ -378,11 +384,9 @@ public class bonusCalculator {
         for(int i=0; i<tsaleEmpList.size(); i++){
             if(tsaleEmpList.get(i) == maxSale){
                 indexOfMax.add(i);
+                empArray.get(i).calExtraBonus(indexOfMax.size());
+                empArray.get(i).setWinner(true);
             }
-        }
-        for(int i=0; i<indexOfMax.size(); i++){ //Send all Index of Highest totalsale, calculate ExtraBonus
-            empArray.get(i).calExtraBonus(indexOfMax.size()); //Add ExtraBonus devide by indexOfMax.size()
-            empArray.get(i).setWinner(true);
         }
     }
 }//end class BonusCalculator
