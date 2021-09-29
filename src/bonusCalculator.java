@@ -50,8 +50,8 @@ class Employee {
         }
     }
 
-    public void calExtraBonus(){
-        extraBonus = totalSalesEmp * 0.005;
+    public void calExtraBonus(int amountWinner){
+        extraBonus = (totalSalesEmp * 0.005)/amountWinner;
     }
 
     public void print(){
@@ -151,13 +151,18 @@ public class bonusCalculator {
         System.out.println("---------------------------------------------------------------");
         System.out.println("          -=*=*== Welcome to Bonus Calculator ==*=*=-");
         System.out.println();
+
+        /*Open and Read file*/
         openFile("Enter product file: ");
         readFileProduct();
         System.out.println();
 
         openFile("Enter overtime file: ");
         readFileOvertime();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3a755d85d9e43f289c0c3015bb80d68464ca7287
         System.out.println();
 
         openFile("Enter employee file: ");
@@ -168,6 +173,7 @@ public class bonusCalculator {
         calOvertime();
         System.out.println(" === Bonus Calculaing Result ===");
         
+<<<<<<< HEAD
         //Calculate SalesBonus
         for(int i=0; i<empArray.size(); i++){
             empArray.get(i).calSalesBonus(proArray); //Set Employee's SalesBonus from price of Products
@@ -176,6 +182,14 @@ public class bonusCalculator {
         }
 
         //Print Product ArrayList
+=======
+        sumSalesUnit();
+        removeDuplicateOT();
+        calOvertime();
+        calSalesBonus();
+
+        /*Print Product ArrayList*/
+>>>>>>> 3a755d85d9e43f289c0c3015bb80d68464ca7287
         System.out.printf("\n\n=== Product summary ===\n");
         for(int i=0;i<proArray.size();i++){
             proArray.get(i).printProduct();
@@ -338,4 +352,24 @@ public class bonusCalculator {
        empArray.get(i).set_overtimeBonus(sumOT);
       }//end for
     }//end calOvertime
+
+    public static void calSalesBonus(){
+        int i;
+        /*Calculate SalesBonus*/
+        List<Double> tsaleEmpList = new ArrayList<Double>();
+        List<Integer> indexOfMax = new ArrayList<Integer>();
+        for(i=0; i<empArray.size(); i++){
+            empArray.get(i).calSalesBonus(proArray); //Set Employee's SalesBonus from price of Products
+             tsaleEmpList.add(empArray.get(i).getTotalSalesEmp());
+        }
+        Double maxSale = Collections.max(tsaleEmpList);
+        for(i=0; i<tsaleEmpList.size(); i++);{
+            if(tsaleEmpList.get(i) == maxSale){
+                indexOfMax.add(i);
+            }
+        }
+        for(i=0; i<indexOfMax.size(); i++){
+            empArray.get(i).calExtraBonus(indexOfMax.size()); //Add ExtraBonus devide by indexOfMax.size()
+        }
+    }
 }//end class BonusCalculator
