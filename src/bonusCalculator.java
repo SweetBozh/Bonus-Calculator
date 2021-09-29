@@ -375,7 +375,6 @@ public class bonusCalculator {
 
         for(int i=0; i<empArray.size(); i++){
             empArray.get(i).calTotalSales(proArray);
-            System.out.println("Total Sale of "+ empArray.get(i).getName() + "= " +empArray.get(i).getTotalSalesEmp());
             empArray.get(i).calSalesBonus(proArray); //Set Employee's SalesBonus from price of Products
             tsaleEmpList.add(empArray.get(i).getTotalSalesEmp());
         }
