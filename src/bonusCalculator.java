@@ -171,9 +171,8 @@ public class bonusCalculator {
         //Calculate SalesBonus
         for(int i=0; i<empArray.size(); i++){
             empArray.get(i).calSalesBonus(proArray); //Set Employee's SalesBonus from price of Products
-            
-            empArray.get(i).getTotalSalesEmp();
-            empArray.get(i).calExtraBonus();
+                        empArray.get(i).calExtraBonus();
+                        //Integer maxIndex = Collection.max(empArray.get(i).getTotalSalesEmp());
         }
 
         //Print Product ArrayList
