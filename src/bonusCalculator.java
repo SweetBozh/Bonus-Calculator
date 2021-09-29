@@ -19,6 +19,9 @@ class Employee {
     public ArrayList<Integer> getSale(){
         return sale;
     }
+    public void set_overtimeBonus(int OTBonus){
+        overtimeBonus = OTBonus;
+    }
     public void print(){
         //System.out.printf("%s, %2d, %2d, %2d, %2d, %2d", name, sale.get(0), sale.get(1), sale.get(2), sale.get(3), sale.get(4));
         
@@ -77,6 +80,22 @@ class Product implements Comparable<Product>{
     }   
 }
 
+class Overtime{
+    private int month;
+    private ArrayList<String> nameOTList= new ArrayList<String>();
+  
+    Overtime(int m,ArrayList<String> list){
+        month = m;
+        nameOTList = list;
+    }
+    public ArrayList<String> getNameOT(){
+      return nameOTList;
+    }
+    public void removeOT(int k){
+      nameOTList.remove(k);
+    }
+}
+
 public class bonusCalculator {
     private static Scanner scanFile;
     private static ArrayList<Employee> empArray  = new ArrayList<Employee>();
@@ -86,6 +105,7 @@ public class bonusCalculator {
     private static String correct;
     private static int printCorrect;
     private static ArrayList<Product> proArray = new ArrayList<Product>();
+    private static ArrayList<Overtime> OTArray = new ArrayList<Overtime>();    
     public static void main(String[] args) throws Exception {
         openFile("Enter employee file: ");
         System.out.println("---------------------------------------------------------------");
@@ -96,6 +116,13 @@ public class bonusCalculator {
         System.out.println("---------------------------------------------------------------");
         readFileProduct();
         sumSalesUnit();
+
+        openFile("Enter Overtime file: ");
+        System.out.println("---------------------------------------------------------------");
+        readFileOvertime();
+        removeDuplicateOT();
+        calOvertime();
+
 
         //Test Printing if Read file correctly? (Correct!)
         for(int i=0; i<empArray.size(); i++){
@@ -187,7 +214,6 @@ public class bonusCalculator {
         String nameProduct;
         int price;
         Product p;
-    
         while (scanFile.hasNext()) {
             String line = scanFile.nextLine();
             String []buf = line.split(",");
@@ -212,5 +238,59 @@ public class bonusCalculator {
         }
         
         Collections.sort(proArray);
+    }
+
+    public static void readFileOvertime(){
+      /*Read file and add all Overtime Employee to OTArray*/
+      int month;
+      ArrayList<String> nameList;
+      Overtime OT;
+
+      while (scanFile.hasNext()) {
+        String line = scanFile.nextLine();
+        String []buf = line.split(",");
+        nameList = new ArrayList<String>();
+        month = Integer.parseInt(buf[0].trim());
+        for(int i=1;i<buf.length;i++){
+          nameList.add(buf[i].trim());
+        }
+        OT = new Overtime(month,nameList);
+        OTArray.add(OT);
+      }
+    }
+
+    public static void removeDuplicateOT(){
+      /*Remove Employee that already get OT this month in OTArray*/
+      int copy;
+      ArrayList<String> tempListOT = new ArrayList<String>();
+      for(int i=0;i<OTArray.size();i++){
+        tempListOT = OTArray.get(i).getNameOT();
+        for(int j=0;j<tempListOT.size();j++){
+            for(int k=j+1;k<tempListOT.size();k++){
+              copy = tempListOT.get(j).compareToIgnoreCase(tempListOT.get(k));
+              if(copy==0)
+                OTArray.get(i).removeOT(k);
+            }
+        }
+      }
+    }
+
+    public static void calOvertime(){
+      /*Calculate and set overtimeBonus for 'an non-duplicate employee'*/
+      ArrayList<String> tempListOT = new ArrayList<String>(); //tempListOT keep Overtime Employees in a month
+      int checkOT,sumOT;
+      for(int i=0 ;i<empArray.size();i++){
+        sumOT = 0;
+        for(int j=0;j<OTArray.size();j++){ //OTArray keep All Overtime Employees in a year
+          tempListOT = OTArray.get(j).getNameOT();
+          for(int k=0;k<tempListOT.size();k++){
+            checkOT = empArray.get(i).getName().compareToIgnoreCase(tempListOT.get(k)); //Check each Employee with the name in Overtime.txt. If exists, get overtimeBonus 
+            if(checkOT==0){ 
+              sumOT+=2000;
+            }
+          }
+        }
+       empArray.get(i).set_overtimeBonus(sumOT); //set 
+      }//loop-employee
     }
 }//end class BonusCalculator
