@@ -23,7 +23,8 @@ class Employee {
         overtimeBonus = OTBonus;
     }
     public void print(){
-        System.out.printf("%s, %2d, %2d, %2d, %2d, %2d", name, sale.get(0), sale.get(1), sale.get(2), sale.get(3), sale.get(4));
+        //System.out.printf("%s, %2d, %2d, %2d, %2d, %2d", name, sale.get(0), sale.get(1), sale.get(2), sale.get(3), sale.get(4));
+        
     }
 }
 class Product implements Comparable<Product>{
@@ -128,6 +129,8 @@ public class bonusCalculator {
             empArray.get(i).print();
             System.out.println();
         }
+<<<<<<< HEAD
+=======
         //Print Product ArrayList
         System.out.printf("\n\n=== Product summary ===\n");
         for(int i=0;i<proArray.size();i++){
@@ -135,6 +138,7 @@ public class bonusCalculator {
         }
         System.out.println();
 
+>>>>>>> 1bf524cb9a4bea5875c2293ba3285f3003fcf066
         scanFile.close();
         input.close();
     }//end main
@@ -221,7 +225,7 @@ public class bonusCalculator {
     }
 
     public static void sumSalesUnit(){
-       //calculate totalSalesUnit
+       /*calculate totalSalesUnit*/
         ArrayList<Integer> tempSales = new ArrayList<Integer>();
         for(int i=0; i<proArray.size(); i++){
           int sumUnit = 0;
