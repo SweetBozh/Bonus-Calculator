@@ -19,6 +19,9 @@ class Employee {
     public ArrayList<Integer> getSale(){
         return sale;
     }
+    public void set_overtimeBonus(int OTBonus){
+        overtimeBonus = OTBonus;
+    }
     public void print(){
         System.out.printf("%s, %2d, %2d, %2d, %2d, %2d", name, sale.get(0), sale.get(1), sale.get(2), sale.get(3), sale.get(4));
     }
