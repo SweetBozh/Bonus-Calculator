@@ -5,20 +5,11 @@
 import java.util.*;
 import java.io.*;
 
-<<<<<<< HEAD
 class Employee {
     private String name;
     private ArrayList<Integer> sale = new ArrayList<Integer>();
     private double salesBonus, overtimeBonus, totalBonus = 0;
     private double totalSalesEmp, extraBonus;
-=======
-class Employee implements Comparable<Employee> {
-    private String name;
-    private ArrayList<Integer> sale = new ArrayList<Integer>();
-    private double salesBonus, overtimeBonus, totalBonus = 0;
-    private double totalSalesEmp = 0, extraBonus;
-    private boolean winner = false;
->>>>>>> 53440af18f43485302dfb99a632accfe04d1ef2b
 
     /* Constructor */
     Employee(String n, ArrayList<Integer> s) {
@@ -26,23 +17,8 @@ class Employee implements Comparable<Employee> {
         name = n;
         sale = s;
     }
-<<<<<<< HEAD
     /*Getter & Setter Method*/
     public String getName(){
-=======
-
-    public int compareTo(Employee other) {
-        if (this.totalSalesEmp > other.totalSalesEmp)
-            return -1;
-        else if (this.totalSalesEmp == other.totalSalesEmp)
-            return 0;
-        else
-            return 1;
-    }
-
-    /* Getter & Setter Method */
-    public String getName() {
->>>>>>> 53440af18f43485302dfb99a632accfe04d1ef2b
         return name;
     }
 
@@ -63,22 +39,6 @@ class Employee implements Comparable<Employee> {
         salesBonus = sb;
         totalBonus += salesBonus;
     }
-<<<<<<< HEAD
-=======
-
-    public void set_extraBonus(double eb) {
-        extraBonus = eb;
-        totalBonus += extraBonus;
-    }
-
-    public void set_totalSales(double ts) {
-        totalSalesEmp = ts;
-    }
-
-    public void setWinner(boolean a) {
-        winner = a;
-    }
->>>>>>> 53440af18f43485302dfb99a632accfe04d1ef2b
 
     /* Activity */
     public void calSalesBonus(ArrayList<Product> p) {
@@ -102,15 +62,6 @@ class Employee implements Comparable<Employee> {
         this.set_extraBonus(extraBonus);
     }
 
-<<<<<<< HEAD
-    public void print(){
-        System.out.printf("%-8s >> Air conditioners (%2.0f)  CCTV systems (%2.0f)  Dishwashers (%2.0f)  Microwave ovens (%2.0f)  Refridgerators (%2)\n",name,sale.get(0),sale.get(1),sale.get(2),sale.get(3),sale.get(4));
-        System.out.println("            Total sales  : "+ totalSalesEmp);
-        System.out.println("            Total bonus  : "+ totalBonus);
-        System.out.println("            • sales bonus   : "+ salesBonus);
-        System.out.println("            • overtime bonus: "+ overtimeBonus);
-        System.out.println("            • extra bonus   : "+ extraBonus);
-=======
     public void print() {
         if (winner == true) {
             System.out.printf("%-8s >> Air conditioners (%2d)  CCTV systems (%2d)  Dishwashers (%2d)  Microwave ovens (%2d)  Refridgerators (%2d)\n",name, sale.get(0), sale.get(1), sale.get(2), sale.get(3), sale.get(4));
@@ -128,7 +79,6 @@ class Employee implements Comparable<Employee> {
             System.out.printf("                  -> overtime bonus = %,.0f\n", overtimeBonus);
         }
 
->>>>>>> 53440af18f43485302dfb99a632accfe04d1ef2b
     }
 }// end class Employee
 
@@ -245,23 +195,6 @@ public class bonusCalculator {
         openFile("Enter employee file: ");
         System.out.println();
         readFileEmployee();
-<<<<<<< HEAD
-        sumSalesUnit();
-        removeDuplicateOT();
-        calOvertime();
-        System.out.println(" === Bonus Calculaing Result ===");
-        
-        //Calculate SalesBonus
-        for(int i=0; i<empArray.size(); i++){
-            empArray.get(i).calSalesBonus(proArray); //Set Employee's SalesBonus from price of Products
-                        empArray.get(i).calExtraBonus();
-                        //Integer maxIndex = Collection.max(empArray.get(i).getTotalSalesEmp());
-        }
-
-        //Print Product ArrayList
-        System.out.printf("\n\n=== Product summary ===\n");
-        for(int i=0;i<proArray.size();i++){
-=======
 
         sumSalesUnit();
         removeDuplicateOT();
@@ -281,7 +214,6 @@ public class bonusCalculator {
         System.out.println("---------------------------------------------------------------------------------------------------------------------");
         System.out.printf("\n                                           =*== Product summary ==*=\n\n");
         for (int i = 0; i < proArray.size(); i++) {
->>>>>>> 53440af18f43485302dfb99a632accfe04d1ef2b
             proArray.get(i).printProduct();
         }
         System.out.println();
@@ -339,14 +271,8 @@ public class bonusCalculator {
                 System.out.println("Missing value, skip\n");
                 s.clear();
             }
-<<<<<<< HEAD
-        }//end while
-        System.out.println("---------------------------------------------------------------");
-    }//end readFileEmployee()
-=======
         } // end while
     }// end readFileEmployee()
->>>>>>> 53440af18f43485302dfb99a632accfe04d1ef2b
 
     public static int checkInvalid(String buf, String line) { // Get value from buf[1],buf[2],... Convert to zero if
                                                               // invalid. Then, return value.
@@ -428,7 +354,6 @@ public class bonusCalculator {
                         OTArray.get(i).removeOT(k);
                 }
             }
-<<<<<<< HEAD
           }//end for
         }//end for
        empArray.get(i).set_overtimeBonus(sumOT);
@@ -452,53 +377,6 @@ public class bonusCalculator {
         }
         for(i=0; i<indexOfMax.size(); i++){
             empArray.get(i).calExtraBonus(indexOfMax.size()); //Add ExtraBonus devide by indexOfMax.size()
-=======
-        }
-    }// end removeDuplicateOT
-
-    public static void calOvertime() {
-        /* Calculate and set overtimeBonus for 'an non-duplicate employee' */
-        ArrayList<String> tempListOT = new ArrayList<String>(); // keep Overtime Employees in a month temporarily
-        int checkOT;
-        double sumOT;
-        for (int i = 0; i < empArray.size(); i++) {// each employee
-            sumOT = 0;
-            for (int j = 0; j < OTArray.size(); j++) { // each month
-                tempListOT = OTArray.get(j).getNameOT();
-                for (int k = 0; k < tempListOT.size(); k++) { // compare an employee with each name in a month
-                    checkOT = empArray.get(i).getName().compareToIgnoreCase(tempListOT.get(k));
-                    if (checkOT == 0) { // name exists, get overtimeBonus
-                        sumOT += 2000.0;
-                    }
-                } // end for
-            } // end for
-            empArray.get(i).set_overtimeBonus(sumOT);
-        } // end for
-    }// end calOvertime
-
-    public static void calculateBonus() {
-        /* Calculate SalesBonus */
-        ArrayList<Double> tsaleEmpList = new ArrayList<Double>();
-        ArrayList<Integer> indexOfMax = new ArrayList<Integer>();
-
-        for (int i = 0; i < empArray.size(); i++) {
-            empArray.get(i).calTotalSales(proArray);
-            empArray.get(i).calSalesBonus(proArray); // Set Employee's SalesBonus from price of Products
-            tsaleEmpList.add(empArray.get(i).getTotalSalesEmp());
-        }
-        /* Calculate ExtraBonus */
-        Double maxSale = Collections.max(tsaleEmpList).doubleValue();
-        for (int i = 0; i < tsaleEmpList.size(); i++) {
-            if (tsaleEmpList.get(i).doubleValue() == maxSale) {
-                indexOfMax.add(i); //Get Amount of Winner
-            }
-        }
-        for (int i = 0; i < tsaleEmpList.size(); i++) {
-            if (tsaleEmpList.get(i).doubleValue() == maxSale) {
-                empArray.get(i).calExtraBonus(indexOfMax.size()); //Give Extra Bonus devided by indexOfMax.size()
-                empArray.get(i).setWinner(true); //If winner = true -> Print with extraBonus
-            }
->>>>>>> 53440af18f43485302dfb99a632accfe04d1ef2b
         }
     }
 }// end class BonusCalculator
