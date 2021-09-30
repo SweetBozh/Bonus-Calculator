@@ -361,20 +361,20 @@ public class bonusCalculator {
           }//end for
         }//end for
         empArray.get(i).set_overtimeBonus(sumOT);
-      }//end for
+    }//end for
     }//end calOvertime
     
-    public static void calSalesBonus(){
+    public static void calSalesBonus() {
         int i;
         /*Calculate SalesBonus*/
         List<Double> tsaleEmpList = new ArrayList<Double>();
         List<Integer> indexOfMax = new ArrayList<Integer>();
-        for(i=0; i<empArray.size(); i++){
+        for(i=0;i<empArray.size();i++){
             empArray.get(i).calSalesBonus(proArray); //Set Employee's SalesBonus from price of Products
             tsaleEmpList.add(empArray.get(i).getTotalSalesEmp());
         }
         Double maxSale = Collections.max(tsaleEmpList);
-        for(i=0; i<tsaleEmpList.size(); i++);{
+        for(i=0;i<tsaleEmpList.size();i++){
             if(tsaleEmpList.get(i) == maxSale){
                 indexOfMax.add(i);
             }
