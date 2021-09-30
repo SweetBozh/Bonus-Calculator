@@ -225,16 +225,16 @@ public class bonusCalculator {
         calOvertime();
         calculateBonus();
         Collections.sort(empArray);
-        Collections.sort(proArray);
         System.out.println("---------------------------------------------------------------------------------------------------------------------");
         System.out.println();
-        System.out.println("                                          =*== Bonus Calculaing Result ==*=");
+        System.out.println("                                          =*== Bonus Calculating Result ==*=");
         System.out.println();
         for (int i = 0; i < empArray.size(); i++) {
             empArray.get(i).print();
             System.out.println();
         }
         /* Print Product ArrayList */
+        Collections.sort(proArray);//Sort Product for Printing Summary
         System.out.println("---------------------------------------------------------------------------------------------------------------------");
         System.out.printf("\n                                           =*== Product summary ==*=\n\n");
         for (int i = 0; i < proArray.size(); i++) {
@@ -402,7 +402,6 @@ public class bonusCalculator {
     }// end calOvertime
 
     public static void calculateBonus() {
-
         /* Calculate SalesBonus */
         ArrayList<Double> tsaleEmpList = new ArrayList<Double>();
         ArrayList<Integer> indexOfMax = new ArrayList<Integer>();
@@ -413,12 +412,16 @@ public class bonusCalculator {
             tsaleEmpList.add(empArray.get(i).getTotalSalesEmp());
         }
         /* Calculate ExtraBonus */
-        Double maxSale = Collections.max(tsaleEmpList);
+        Double maxSale = Collections.max(tsaleEmpList).doubleValue();
         for (int i = 0; i < tsaleEmpList.size(); i++) {
-            if (tsaleEmpList.get(i) == maxSale) {
-                indexOfMax.add(i);
-                empArray.get(i).calExtraBonus(indexOfMax.size());
-                empArray.get(i).setWinner(true);
+            if (tsaleEmpList.get(i).doubleValue() == maxSale) {
+                indexOfMax.add(i); //Get Amount of Winner
+            }
+        }
+        for (int i = 0; i < tsaleEmpList.size(); i++) {
+            if (tsaleEmpList.get(i).doubleValue() == maxSale) {
+                empArray.get(i).calExtraBonus(indexOfMax.size()); //Give Extra Bonus devided by indexOfMax.size()
+                empArray.get(i).setWinner(true); //If winner = true -> Print with extraBonus
             }
         }
     }
