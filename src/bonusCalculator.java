@@ -1,4 +1,3 @@
-
 /*Members
 1. Warunyupa Lerdsaeng   6313180
 2. Nalin Suesangiamsakul 6313216*/
@@ -87,6 +86,7 @@ class Product implements Comparable<Product> {
     private double price;
     private double bonus, totalSalesUnit, totalSalesBaht;
 
+    /* Constructor */
     Product(String n, double pr) {
         nameProduct = n;
         price = pr;
@@ -102,6 +102,7 @@ class Product implements Comparable<Product> {
             return 1;
     }
 
+    /* Getter & Setter Method */
     public double getPrice() {
         return price;
     }
@@ -124,13 +125,14 @@ class Product implements Comparable<Product> {
         else
             bonus = price * 0.025;
     }
-
-    public void SumSalesUnit(double sum) {
-        totalSalesUnit = sum;
-    }
-
+    
     public void setSalesBaht() {
         totalSalesBaht = totalSalesUnit * price;
+    }
+
+    /* Activity */
+    public void SumSalesUnit(double sum) {
+        totalSalesUnit = sum;
     }
 
     public void printProduct() {
