@@ -1,3 +1,4 @@
+
 /*Members
 1. Warunyupa Lerdsaeng   6313180
 2. Nalin Suesangiamsakul 6313216*/
@@ -114,7 +115,7 @@ class Product implements Comparable<Product> {
     Product(String n, double pr) {
         nameProduct = n;
         price = pr;
-        setBonus(pr);
+        calBonus(pr);
     }
 
     public int compareTo(Product other) {
@@ -139,7 +140,11 @@ class Product implements Comparable<Product> {
         return nameProduct;
     }
 
-    public void setBonus(double pr) {
+    public void setSalesUnit(double sum) {
+        totalSalesUnit = sum;
+    }
+
+    public void calBonus(double pr) {
         if (pr >= 0 && pr < 10000)
             bonus = price * 0.01;
         else if (pr >= 10000 && pr < 30000)
@@ -150,15 +155,11 @@ class Product implements Comparable<Product> {
             bonus = price * 0.025;
     }
     
-    public void setSalesBaht() {
+    public void calSalesBaht() {
         totalSalesBaht = totalSalesUnit * price;
     }
 
     /* Activity */
-    public void SumSalesUnit(double sum) {
-        totalSalesUnit = sum;
-    }
-
     public void printProduct() {
         System.out.printf("%-20s price = %,7.0f\t (bonus = %,5.0f)\ttotal sales = %,5.0f units\t%,10.0f baht\n",
                 nameProduct, price, bonus, totalSalesUnit, totalSalesBaht);
@@ -346,8 +347,8 @@ public class bonusCalculator {
                 tempSales = empArray.get(j).getSale();
                 sumUnit += tempSales.get(i);
             }
-            proArray.get(i).SumSalesUnit(sumUnit);
-            proArray.get(i).setSalesBaht();
+            proArray.get(i).setSalesUnit(sumUnit);
+            proArray.get(i).calSalesBaht();
         }
     }// end sumSalesUnit
 
