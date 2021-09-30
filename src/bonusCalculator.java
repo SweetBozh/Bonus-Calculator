@@ -223,7 +223,7 @@ public class bonusCalculator {
         System.out.println();
         readFileEmployee();
 
-        sumSalesUnit();
+        calSalesUnit();
         removeDuplicateOT();
         calOvertime();
         calculateBonus();
@@ -336,7 +336,7 @@ public class bonusCalculator {
         }
     }// end readFileProduct
 
-    public static void sumSalesUnit() {
+    public static void calSalesUnit() {
         /* calculate totalSalesUnit */
         ArrayList<Integer> tempSales = new ArrayList<Integer>();
         double sumUnit;
@@ -349,7 +349,7 @@ public class bonusCalculator {
             proArray.get(i).setSalesUnit(sumUnit);
             proArray.get(i).calSalesBaht();
         }
-    }// end sumSalesUnit
+    }// end calSalesUnit
 
     public static void readFileOvertime() {
         /* Read file and add all Overtime Employee to OTArray */
