@@ -1,6 +1,6 @@
 
 /*Members
-1. Warunyupa Lerdsaeng 6313180
+1. Warunyupa Lerdsaeng   6313180
 2. Nalin Suesangiamsakul 6313216*/
 import java.util.*;
 import java.io.*;
@@ -217,7 +217,9 @@ public class bonusCalculator {
             proArray.get(i).printProduct();
         }
         System.out.println();
-
+        System.out.println("---------------------------------------------------------------------------------------------------------------------");
+        System.out.println("End Program.");
+        System.out.println();
         scanFile.close();
         input.close();
     }// end main
