@@ -144,6 +144,7 @@ class Product implements Comparable<Product> {
         totalSalesUnit = sum;
     }
 
+    /* Activity */
     public void calBonus(double pr) {
         if (pr >= 0 && pr < 10000)
             bonus = price * 0.01;
@@ -159,7 +160,6 @@ class Product implements Comparable<Product> {
         totalSalesBaht = totalSalesUnit * price;
     }
 
-    /* Activity */
     public void printProduct() {
         System.out.printf("%-20s price = %,7.0f\t (bonus = %,5.0f)\ttotal sales = %,5.0f units\t%,10.0f baht\n",
                 nameProduct, price, bonus, totalSalesUnit, totalSalesBaht);
@@ -338,6 +338,7 @@ public class bonusCalculator {
 
     public static void calSalesUnit() {
         /* calculate totalSalesUnit */
+        //excluding salesUnit of Employee with missing value
         ArrayList<Integer> tempSales = new ArrayList<Integer>();
         double sumUnit;
         for (int i = 0; i < proArray.size(); i++) {
