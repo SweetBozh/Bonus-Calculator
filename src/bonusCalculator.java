@@ -337,6 +337,7 @@ public class bonusCalculator {
 
     public static void sumSalesUnit() {
         /* calculate totalSalesUnit */
+        //excluding salesUnit of Employee with missing value
         ArrayList<Integer> tempSales = new ArrayList<Integer>();
         double sumUnit;
         for (int i = 0; i < proArray.size(); i++) {
