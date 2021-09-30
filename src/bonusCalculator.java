@@ -358,10 +358,10 @@ public class bonusCalculator {
             }
           }//end for
         }//end for
-       empArray.get(i).set_overtimeBonus(sumOT);
+        empArray.get(i).set_overtimeBonus(sumOT);
       }//end for
     }//end calOvertime
-
+    
     public static void calSalesBonus(){
         int i;
         /*Calculate SalesBonus*/
