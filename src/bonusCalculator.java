@@ -190,8 +190,7 @@ class Overtime {
     }
 }// end class Overtime
 
-// ======================================= Main Class
-// ================================================
+// ======================================= Main Class ================================================
 public class bonusCalculator {
     private static Scanner scanFile;
     private static Scanner input = new Scanner(System.in);
