@@ -191,7 +191,7 @@ class Overtime {
 }// end class Overtime
 
 // ======================================= Main Class ================================================
-public class bonusCalculator {
+public class BonusCalculator {
     private static Scanner scanFile;
     private static Scanner input = new Scanner(System.in);
     private static ArrayList<Employee> empArray = new ArrayList<Employee>();
